@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "dacb3727-32a6-423d-84c8-3757cf42b702",
+		"name": "Employees API (Bearer via Auth Tab)",
+		"description": "Collection with collection-level Bearer auth using {{BEARER_TOKEN}}.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44793042"
+	},
+	"item": [
+		{
+			"name": "GET /employees",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/employees",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /employees/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/employees/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /employees/search?name={name}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/employees/search?name=jo",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "jo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /employees",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"firstName\": \"Enrique\",\n        \"middleName\": \"Gustavo\",\n        \"paternalLastName\": \"Peña\",\n        \"maternalLastName\": \"Nieto\",\n        \"age\": 48,\n        \"gender\": \"M\",\n        \"birthDate\": \"05-03-1995\",\n        \"position\": \"Presidente\",\n        \"active\": true\n    }\n]"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/employees",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /employees/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Claudia\",\n    \"middleName\": \"\",\n    \"lastName\": \"Sheinbaum\",\n    \"secondLastName\": \"Pardo\",\n    \"age\": 43,\n    \"gender\": \"F\",\n    \"birthDate\": \"22-01-1987\",\n    \"position\": \"Presidente\",\n    \"active\": true\n  }"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/employees/42",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /employees/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"position\": \"Presidenta\",\n  \"active\": false\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/employees/42",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /employees/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BEARER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/employees/42",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"employees",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /actuator/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/actuator/health",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /swagger-ui/index.html",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/swagger-ui/index.html",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"swagger-ui",
+						"index.html"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{BEARER_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "BEARER_TOKEN",
+			"value": ""
+		}
+	]
+}

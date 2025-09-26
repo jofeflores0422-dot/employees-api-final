@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  oracle-xe:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: oracle-xe
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      ORACLE_PASSWORD: Oracle123
+      APP_USER: APP
+      APP_USER_PASSWORD: App_1234
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "echo 'select 1 from dual;' | sqlplus -s system/Oracle123@//localhost:1521/XEPDB1 | grep -q '1'"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+
+  employees-api:
+    build: .
+    image: employees-api:latest
+    depends_on:
+      oracle-xe:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: oracle
+      ORACLE_HOST: oracle-xe
+      ORACLE_SERVICE_NAME: XEPDB1
+    volumes:
+      - ./application-oracle.yml:/app/config/application-oracle.yml:ro
+    command: ["java","-Dspring.config.additional-location=file:/app/config/","-jar","/app/app.jar"]
+    ports:
+      - "8080:8080"
+
+volumes:
+  oracle-data:

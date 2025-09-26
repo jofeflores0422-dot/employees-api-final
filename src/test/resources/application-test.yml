@@ -1,0 +1,3 @@
+security:
+  jwt:
+    secret: "test-secret-32-bytes-minimo-para-hmac........"

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="APP_LOGGING_LEVEL" value="${APP_LOGGING_LEVEL:-INFO}"/>        <!-- nivel root -->
+    <property name="APP_LOGGING_LEVEL_APP" value="${APP_LOGGING_LEVEL_APP:-DEBUG}"/> <!-- tu paquete -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%X{traceId}] %X{httpMethod} %X{requestUri} %X{queryParams} %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.demo.employees" level="${APP_LOGGING_LEVEL_APP}"/>
+
+    <logger name="com.demo.employees.infrastructure.configurations.interceptors.RequestLoggingInterceptor" level="DEBUG"/>
+    <logger name="com.demo.employees.infrastructure.configurations.interceptors.TraceIdInterceptor" level="DEBUG"/>
+    <logger name="com.demo.employees.infrastructure.configurations.interceptors.MdcCleanupInterceptor" level="INFO"/>
+
+    <logger name="org.flywaydb" level="INFO"/>
+    <logger name="org.springframework.boot.autoconfigure.flyway" level="INFO"/>
+
+    <root level="${APP_LOGGING_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

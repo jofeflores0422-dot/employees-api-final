@@ -1,0 +1,176 @@
+openapi: 3.0.1
+info:
+  title: Employees API
+  version: "1.0.0"
+  description: CRUD de empleados con búsqueda por nombre.
+servers:
+  - url: http://localhost:8080
+paths:
+  /employees:
+    get:
+      summary: Listar empleados
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeResponseDTO'
+    post:
+      summary: Crear empleados
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EmployeeRequestDTO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeResponseDTO'
+  /employees/{id}:
+    get:
+      summary: Obtener empleado por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer, format: int64 }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponseDTO'
+        '404':
+          description: Not Found
+    put:
+      summary: Reemplazar empleado por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer, format: int64 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRequestDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponseDTO'
+    patch:
+      summary: Actualización parcial de empleado
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer, format: int64 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeePatchDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponseDTO'
+    delete:
+      summary: Eliminar empleado por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer, format: int64 }
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  /employees/search:
+    get:
+      summary: Buscar empleados por nombre
+      parameters:
+        - in: query
+          name: name
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeResponseDTO'
+components:
+  schemas:
+    EmployeeRequestDTO:
+      type: object
+      required: [firstName, lastName, secondLastName, age, gender, birthDate, position]
+      properties:
+        firstName: { type: string, maxLength: 60 }
+        middleName: { type: string, maxLength: 60 }
+        lastName: { type: string, maxLength: 80 }
+        secondLastName: { type: string, maxLength: 80 }
+        age: { type: integer, format: int32, minimum: 0, maximum: 120 }
+        gender:
+          type: string
+          enum: [M, F, O]
+        birthDate: { type: string, format: date }
+        position: { type: string, maxLength: 120 }
+        active: { type: boolean }
+    EmployeePatchDTO:
+      type: object
+      properties:
+        firstName: { type: string }
+        middleName: { type: string }
+        lastName: { type: string }
+        secondLastName: { type: string }
+        age: { type: integer, format: int32 }
+        gender: { type: string, enum: [M, F, O] }
+        birthDate: { type: string, format: date }
+        position: { type: string }
+        active: { type: boolean }
+    EmployeeResponseDTO:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        firstName: { type: string }
+        middleName: { type: string }
+        lastName: { type: string }
+        secondLastName: { type: string }
+        age: { type: integer, format: int32 }
+        gender: { type: string, enum: [M, F, O] }
+        birthDate: { type: string, format: date }
+        position: { type: string }
+        createdAt: { type: string, format: date-time }
+        active: { type: boolean }
+    ErrorResponseDTO:
+      type: object
+      properties:
+        timestamp: { type: string, format: date-time }
+        status: { type: integer }
+        error: { type: string }
+        message: { type: string }
+        path: { type: string }

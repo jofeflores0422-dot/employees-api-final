@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/XEPDB1
+    username: APP
+    password: App_1234
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  flyway:
+    enabled: true
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    user: APP
+    password: App_1234
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    clean-disabled: true
+    baseline-version: 0
+
+security:
+  jwt:
+    secret: "dev-secret-32bytes-minimo-para-hmac........"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        default_schema: APP
+
+logging.level:
+  org.flywaydb: DEBUG
+  org.springframework.boot.autoconfigure.flyway: DEBUG
+
+
